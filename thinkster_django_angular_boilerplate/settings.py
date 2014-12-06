@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'authentication.Account'
 
 # Application definition
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'compressor',
+    'authentication'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,7 +64,8 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
+        engine='django.db.backends.sqlite3'
     )
 }
 
@@ -79,6 +82,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
